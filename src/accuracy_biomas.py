@@ -109,7 +109,7 @@ def AccuracyAssessment(GDALDataSet, layer, classs, outdir, biome, year, precisio
 
 	biomes = []
 
-	with open('/data/PASTAGEM/Mapeamento/MapBiomas/Versions/v5.0/Accuracy/biomas_col5.txt','rt') as in_file:
+	with open('biomas_col5.txt','rt') as in_file:
 		for data in in_file:
 			biomes.append(data.replace('\n',''))
 	
