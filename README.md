@@ -23,9 +23,14 @@ Requisites:
    * Install Python-Gdal and Gdal Binaries
     
    * Install Earth Engine python library. [Click here to see how to install with Python PIP.](https://developers.google.com/earth-engine/guides/python_install )   
-  
-  # How to run
-    
+
+<details>
+<summary> <b>How to run</b> </summary>
+<p>
+
+</p>
+</details>
+
 <details>
 <summary> <b>Changelog</b> </summary>
 <p>
