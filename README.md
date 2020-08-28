@@ -2,7 +2,7 @@
 
 This repository organizes the pasture mapping codes used by Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG/UFG). The methology used by LAPIG team is avaliable in the paper of [PARENTE et al. (2017)](https://www.sciencedirect.com/science/article/pii/S0034425719303207) 
 
-Requisites:
+**Requisites**:
 
   * Python 3.6 or above
   
@@ -10,7 +10,7 @@ Requisites:
   
   * Earth Engine python library
   
-  Recommendations (for Windows): 
+  **Recommendations (for Windows)**: 
    * Install [Anaconda Python 3.6](https://www.anaconda.com/download/) or above and the [Gdal package](https://anaconda.org/conda-forge/gdal). For Windows users, we need to add some system variables like:
       
       * PATH =  C:\ProgramData\Miniconda3; C:\ProgramData\Miniconda3\Library\bin; C:\ProgramData\Miniconda3\Scripts;
@@ -18,7 +18,7 @@ Requisites:
    
    * Install Earth Engine python library. [Click here to see how to install with Anaconda.](https://developers.google.com/earth-engine/guides/python_install )
   
-  Recommendations (for Unix):
+  **Recommendations (for Unix)**:
   
    * Install Python-Gdal and Gdal Binaries
     
