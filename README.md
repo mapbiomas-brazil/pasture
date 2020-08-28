@@ -1,3 +1,5 @@
+![Vinícius Mesquita](Logo_v2.png)
+
 # Pasture Mapping Codes
 
 This repository organizes the pasture mapping codes used by Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG/UFG). The methology used by LAPIG team is avaliable in the paper of [PARENTE et al. (2017)](https://www.sciencedirect.com/science/article/pii/S0034425719303207) 
