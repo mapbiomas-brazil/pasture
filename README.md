@@ -18,7 +18,7 @@ This repository organizes the pasture mapping codes used by [Laboratório de Pro
       * PATH =  C:\ProgramData\Miniconda3; C:\ProgramData\Miniconda3\Library\bin; C:\ProgramData\Miniconda3\Scripts;
       * GDAL_DATA = C:\ProgramData\Miniconda3\Library\share\gdal
    
-   * Install nd configure the Earth Engine python library. [Click here to see how to install with Anaconda.](https://developers.google.com/earth-engine/guides/python_install )
+   * Install nd configure the Earth Engine python library. [Click here to see how to install with Earth Engine library.](https://developers.google.com/earth-engine/guides/python_install )
   
   **Recommendations (for Unix)**:
   
