@@ -63,19 +63,6 @@ def AccuracyAssessment(GDALDataSet, layer, classs, outdir, year, precision):
 		geom = feature.GetGeometryRef();
 		mx, my = geom.GetX(), geom.GetY();
 
-		#try:
-		#	yearClass = year
-		#	if year > 2017:
-		#		yearClass = 2017
-		#	numVotes = int(feature.GetFieldAsString(getclasssIndex('nb_'+str(yearClass) + '_1', layer)))
-		#except:
-		#	numVotes = 0
-
-		#if numVotes >= 3:
-
-		#print(gt)
-		#print(mx, my)
-
 		try:
 			px = int((mx - gt[0]) / gt[1]) #x pixel
 			py = int((my - gt[3]) / gt[5]) #y pixel
@@ -123,35 +110,6 @@ def AccuracyAssessment(GDALDataSet, layer, classs, outdir, year, precision):
 	keys.insert(0,'#####')
 	totalAccuracy.insert(0,keys)
 
-	#mapArea = {
-	#'2017_NEW' : {'Pasture': 177355574.156, 'Total':850038838.195},
-	#'2018_NEW' : {'Pasture': 0.0, 'Total':850038838.195},
-	#'2017_OLD' : {'Pasture': 171280442.157, 'Total':850038838.195}
-	#}
-
-	#mapArea = {
-	#'2016' : {'Pasture': 169568217.479, 'Total':850038838.195},
-	#'2017' : {'Pasture': 169796320.796, 'Total':850038838.195},
-	#'2018' : {'Pasture': 169860979.623, 'Total':850038838.195}
-	#}
-
-	#mapArea = {
-	#'2017_OLD' : {'Pasture': 171280442.15682864, 'Total':850038838.195},
-	#'2017_COL3_1' : {'Pasture': 177355607.75328773, 'Total':850038838.195},
-	#'2017_COL_4' : {'Pasture': 174131592.25627664, 'Total':850038838.195}
-	#}
-
-	#mapArea = {
-	#'223_071_1985_NORM': {'Pasture': 1169754.18,'Total': 2673193.37},
-	#'223_071_2000_NORM': {'Pasture': 1634527.10,'Total': 2673193.37},
-	#'223_071_2010_NORM': {'Pasture': 1621163.24,'Total': 2673193.37},
-	#'223_071_2015_NORM': {'Pasture': 1629227.26,'Total': 2673193.37},
-	#'223_071_1985_OLD': {'Pasture': 1040652.30,'Total': 2673193.37},
-	#'223_071_2000_OLD': {'Pasture': 1569037.15,'Total': 2673193.37},
-	#'223_071_2010_OLD': {'Pasture': 1632185.87,'Total': 2673193.37},
-	#'223_071_2015_OLD': {'Pasture': 1630858.87,'Total': 2673193.37}
-	#}
-
 	mapArea ={
 		'1985': {'Pasture': 121384802.1, 'Total':850038946.4674064},
 		'1986': {'Pasture': 121333604.5, 'Total':850038946.4674064},
@@ -189,12 +147,6 @@ def AccuracyAssessment(GDALDataSet, layer, classs, outdir, year, precision):
 		'2018': {'Pasture': 170686078, 'Total':850038946.4674064},
 		'2019': {'Pasture': 170903212.3, 'Total':850038946.4674064}
 	}
-
-	#mapArea = {
-	#'2016' : {'Pasture': 155418238.772, 'Total':850038838.195},
-	#'2017' : {'Pasture': 155923836.369, 'Total':850038838.195},
-	#'2018' : {'Pasture': 155855484.423, 'Total':850038838.195}
-	#}
 
 	areaPasture = mapArea[str(year)]['Pasture']
 
@@ -270,8 +222,6 @@ def AccuracyAssessment(GDALDataSet, layer, classs, outdir, year, precision):
 	AC = PC * float(totalArea)
 	LI = totalArea*(PC - ME)
 	LS = totalArea*(PC + ME)
-
-	#print(totalAccuracy,producerAccRefPt,userAccPt,globalAcc,PI,PC,ME,AC,LI,LS)
 
 	return(totalAccuracy,producerAccRefPt,userAccPt,globalAcc,PI,PC,ME,AC,LI,LS,areaPasture,(totalArea-areaPasture),totalArea)
 	
