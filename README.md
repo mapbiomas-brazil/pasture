@@ -26,5 +26,9 @@ Requisites:
   
   # How to run
     
-  # Changelog
-  
+<details>
+<summary> <b>Changelog</b> </summary>
+<p>
+
+</p>
+</details>
