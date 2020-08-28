@@ -16,14 +16,14 @@ Requisites:
       * PATH =  C:\ProgramData\Miniconda3; C:\ProgramData\Miniconda3\Library\bin; C:\ProgramData\Miniconda3\Scripts;
       * GDAL_DATA = C:\ProgramData\Miniconda3\Library\share\gdal
    
-   * Install Earth Engine python library. [lick hero to see how to install with Anaconda](https://developers.google.com/earth-engine/guides/python_install )
+   * Install Earth Engine python library. [Click here to see how to install with Anaconda.](https://developers.google.com/earth-engine/guides/python_install )
   
   Recommendations (for Unix):
   
    * Install Python-Gdal and Gdal Binaries
     
-   * Install Earth Engine python library. [Click hero to see how to install with PIP](htps://developers.google.com/earth-engine/guides/python_install)
-   
+   * Install Earth Engine python library. [Click here to see how to install with Python PIP.](https://developers.google.com/earth-engine/guides/python_install )   
+  
   # How to run
     
   # Changelog
