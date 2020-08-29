@@ -22,7 +22,7 @@ This repository organizes the pasture mapping codes used by [Laboratório de Pro
   
   **Recommendations for Unix**:
   
-   * Install Python-Gdal and Gdal Binaries
+   * Install Python-Gdal and Gdal Binaries (sudo apt-get install -y python-gdal; sudo apt-get install -y gdal)
     
    * Install Earth Engine python library. [Click here to see how to install with Python PIP.](https://developers.google.com/earth-engine/guides/python_install )   
 
