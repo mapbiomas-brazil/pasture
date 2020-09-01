@@ -12,6 +12,8 @@ This repository organizes the pasture mapping codes used by [Laboratório de Pro
   
   * Earth Engine python library
   
+  * An folder synchronization with Google Drive ([For Windows](https://www.google.com/drive/download/) | [For Unix](https://github.com/odeke-em/drive))
+  
   **Recommendations for Windows**: 
    * Install [Miniconda - Python 3.7](https://docs.conda.io/en/latest/miniconda.html) or above and the [Gdal package](https://anaconda.org/conda-forge/gdal). For Windows users, we need to add some system variables like:
       
@@ -27,6 +29,7 @@ This repository organizes the pasture mapping codes used by [Laboratório de Pro
    * Install Earth Engine python library. [Click here to see how to install and configure with Python PIP.](https://developers.google.com/earth-engine/guides/python_install )   
 
 # How to use
+
 
 
 <details>
