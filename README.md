@@ -26,7 +26,7 @@ This repository organizes the pasture mapping codes used by [Laboratório de Pro
     
    * Install Earth Engine python library. [Click here to see how to install and configure with Python PIP.](https://developers.google.com/earth-engine/guides/python_install )   
 
-#How to use
+# How to use
 
 
 <details>
