@@ -7,35 +7,34 @@ import ee
 import logging
 import traceback
 import os
-from os.path import expanduser
 
 ee.Initialize()
 
+tiles = open('tiles.in','r').read() #Cultivated Pasture tiles
+#tiles = open('tiles_natural.in','r').read() #Native Pasture tiles
 
-home = expanduser("~")
-tiles = open(home+'/tiles.in','r').read()
 tiles = tiles.replace('T','').split('\n')
-
 
 global pasture_type
 global folder_dir
 global Tile2Process
 
-#pasture_type = None
-pasture_type = 1 # 
+pasture_type = 1
+
+folder = 'mapbiomas_col5_pasture'
 
 BR_Tiles = ['001057','001058','001059','001060','001061','001062','001063','001064','001065','001066','001067','002057','002059','002060','002061','002062','002063','002064','002065','002066','002067','002068','003058','003059','003060','003061','003062','003063','003064','003065','003066','003067','003068','004059','004060','004061','004062','004063','004064','004065','004066','004067','005059','005060','005063','005064','005065','005066','005067','006063','006064','006065','006066','214064','214065','214066','214067','215063','215064','215065','215066','215067','215068','215069','215070','215071','215072','215073','215074','216063','216064','216065','216066','216067','216068','216069','216070','216071','216072','216073','216074','216075','216076','217062','217063','217064','217065','217066','217067','217068','217069','217070','217071','217072','217073','217074','217075','217076','218062','218063','218064','218065','218066','218067','218068','218069','218070','218071','218072','218073','218074','218075','218076','218077','219062','219063','219064','219065','219066','219067','219068','219069','219070','219071','219072','219073','219074','219075','219076','219077','220062','220063','220064','220065','220066','220067','220068','220069','220070','220071','220072','220073','220074','220075','220076','220077','220078','220079','220080','220081','221061','221062','221063','221064','221065','221066','221067','221068','221069','221070','221071','221072','221073','221074','221075','221076','221077','221078','221079','221080','221081','221082','221083','222061','222062','222063','222064','222065','222066','222067','222068','222069','222070','222071','222072','222073','222074','222075','222076','222077','222078','222079','222080','222081','222082','222083','223060','223061','223062','223063','223064','223065','223066','223067','223068','223069','223070','223071','223072','223073','223074','223075','223076','223077','223078','223079','223080','223081','223082','224060','224061','224062','224063','224064','224065','224066','224067','224068','224069','224070','224071','224072','224073','224074','224075','224076','224077','224078','224079','224080','224081','224082','225058','225059','225060','225061','225062','225063','225064','225065','225066','225067','225068','225069','225070','225071','225072','225073','225074','225075','225076','225077','225080','225081','226057','226058','226059','226060','226061','226062','226063','226064','226065','226066','226067','226068','226069','226070','226071','226072','226073','226074','226075','227058','227059','227060','227061','227062','227063','227064','227065','227066','227067','227068','227069','227070','227071','227072','227073','227074','227075','228058','228059','228060','228061','228062','228063','228064','228065','228066','228067','228068','228069','228070','228071','228072','229058','229059','229060','229061','229062','229063','229064','229065','229066','229067','229068','229069','229070','229071','230059','230060','230061','230062','230063','230064','230065','230066','230067','230068','230069','231057','231058','231059','231060','231061','231062','231063','231064','231065','231066','231067','231068','231069','232056','232057','232058','232059','232060','232061','232062','232063','232064','232065','232066','232067','232068','232069','233057','233058','233059','233060','233061','233062','233063','233064','233065','233066','233067','233068','220082']
 
 if pasture_type == 0:
-	folder_dir = "mapbiomas_col5_pasture_natural_v2"
+	folder_dir = folder + "_natural"
 	Tile2Process = tiles
 	Col2Process = ee.FeatureCollection("users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_natural_QGIS") #natural
 elif pasture_type == 1:
-	folder_dir = "mapbiomas_col5_pasture_planted_v2"
+	folder_dir = folder + "_planted"
 	Tile2Process = tiles
 	Col2Process = ee.FeatureCollection("users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_cultivado_QGIS_new_pampa_v2") #planted
 else:
-	folder_dir = "mapbiomas_col5_pasture_v2"
+	folder_dir = folder
 	Tile2Process = BR_Tiles
 	Col2Process = ee.FeatureCollection("users/vieiramesquita/LAPIG-PASTURE/VECTORS/mapbiomas_col3_1_ALL_STAGES_bin_12_03_2018_QGIS")
 
@@ -689,8 +688,8 @@ config = {
 			, "poolSize": 6
 			, "poolCheckTime": 60
 			,	"attempts": 20
-			#, "taskConfig": { "scale": 30, "maxPixels": 1.0E13, "driveFolder": folder_dir}
-			, "taskConfig": { "scale": 30, "maxPixels": 1.0E13, "bucket": 'mapbiomas-pastagem'}
+			, "taskConfig": { "scale": 30, "maxPixels": 1.0E13, "driveFolder": folder_dir}
+			#, "taskConfig": { "scale": 30, "maxPixels": 1.0E13, "bucket": 'mapbiomas-pastagem'}
 	}
 }
 
@@ -1097,10 +1096,7 @@ def checkPoolState(config, taskPool):
 				reRunCount = mapResult[taskId]['reRunCount'];
 				if(reRunCount < config['download']['attempts']):
 					logger.info('Try export classification %s.tif again', taskId)
-
-					reRuntask = ee.batch.Export.image.toCloudStorage(mapResult[taskId]['result'], description = taskId,bucket = mapResult[taskId]['bucket'], \
-															  fileNamePrefix =mapResult[taskId]['fileNamePrefix'], region = mapResult[taskId]['region'], \
-															   scale = mapResult[taskId]['scale'],maxPixels = mapResult[taskId]['maxPixels'])
+					reRuntask = ee.batch.Export.image(mapResult[taskId]['result'], taskId, mapResult[taskId]['config'])
 					mapResult[taskId]['reRunCount'] = reRunCount + 1;
 					reRuntask.start()
 					taskPool.append(reRuntask)
@@ -1191,12 +1187,16 @@ for tile in config['grid']['tilesToProcess']:
 					IDPrefix = taskId[3:7]+taskId[0:3]+taskId[7:]
 
 				taskId = IDPrefix
-
-				task = ee.batch.Export.image.toCloudStorage(image = serieResult, description = taskId,bucket = taskConfig['bucket'], \
-															  fileNamePrefix =('COL5_105B/'+ taskId), region = taskConfig['region'], \
-															   scale = taskConfig['scale'],maxPixels = taskConfig['maxPixels'])
-
-				mapResult[taskId] = { 'result': serieResult, 'config': taskConfig.copy(), 'reRunCount': 0, 'fileNamePrefix': 'COL5_105B/'+ taskId };
+				
+				task = ee.batch.Export.image(serieResult, IDPrefix, taskConfig)
+				
+				#task = ee.batch.Export.image.toCloudStorage(image = serieResult, description = taskId,bucket = taskConfig['bucket'], \
+				#											  fileNamePrefix =('COL5_105B/'+ taskId), region = taskConfig['region'], \
+				#											   scale = taskConfig['scale'],maxPixels = taskConfig['maxPixels'])
+				
+				mapResult[taskId] = { 'result': serieResult, 'config': taskConfig.copy(), 'reRunCount': 0 };
+				
+				#mapResult[taskId] = { 'result': serieResult, 'config': taskConfig.copy(), 'reRunCount': 0, 'fileNamePrefix': 'COL5_105B/'+ taskId };
 				task.start()
 	
 				taskPool.append(task)
