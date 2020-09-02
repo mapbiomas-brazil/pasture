@@ -84,7 +84,7 @@ This code need 2 arguments to run, the **start row** and the **window size** (e.
 
 Because of the high memory consumption, this code works in blocks, so you probably will create an bash file (or batch - Windows) to make the process more autonomous. See the code examples below showing how to apply the filter by blocks.
 
-### For Unix (shell):
+### For Unix (Shell):
 ```shell
 for X in {0..145446..2048} do python3 2_Multidimensional_median_filter $X 2048
 ```
