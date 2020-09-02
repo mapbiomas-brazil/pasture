@@ -70,7 +70,7 @@ In addition, if you want to view a file in a GIS like QGIS, just add a pyramid t
 
  * gdaladdo -ro lapig_pasture_map_<year xxxx>.tif 2 4 8 --config COMPRESS_OVERVIEW LZW --config USE_RRD YES
  
-## 3. Apply multidimensional median filter (3 x 3 x 5)
+## 3. Applying the multidimensional median filter (3 x 3 x 5)
 
 Before start this processs, be sure of the amount of memory available on your machine and define these variables on the script **2_Multidimensional_median_filter**:
 
