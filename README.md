@@ -55,7 +55,7 @@ Before executing the first Python code, change the parameters below as desired:
 Open the console terminal (Prompt on Windows) and run the these line: **python3 1_Pasture_classification_mapbiomas_COL_5.py**
 
 ### Using JavaScript in GEE
-* [Acess this link](https://code.earthengine.google.com/0c97565dcb06e343589451d08c3a4816) and, as you wish, change the parameters of ***year***, ***landsatWRSPath***, ***landsatWRSRow***, ***my_folder***. After that you can click in **Run** and export your result in **Task**.
+* [Access this link](https://code.earthengine.google.com/0c97565dcb06e343589451d08c3a4816) and, if desired, change the parameters of ***year***, ***landsatWRSPath***, ***landsatWRSRow***, ***my_folder***. After that you can click in **Run** and export your result in **Task**.
 
 Also, you can change the training dataset (cultivated and natural) by changing the variable ***TRAIN_DATA*** (line 9).
 
