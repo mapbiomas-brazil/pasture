@@ -30,15 +30,6 @@ This repository organizes the pasture mapping codes used by [Laboratório de Pro
     
    * Install Earth Engine python library. [Click here to see how to install and configure with Python PIP.](https://developers.google.com/earth-engine/guides/python_install )   
 
-<details>
-<summary> <b>Changelog</b> </summary>
-<p>
-
-* Version 1.0 released (Github version)
-
-</p>
-</details>
-
 # How to use
 
 ## 1. Run classification in Google Earth Engine (GEE)
@@ -108,3 +99,13 @@ P.S.: It's possible to obtain the image size using the binary *gdalinfo*.
 ## 4. Merging the files... again.
 
 Like in the section 2, we will use the *gdalbuildvrt* and *gdal_translate* to merge the result files by year.
+
+
+<details>
+<summary> <b>Changelog</b> </summary>
+<p>
+
+* Version 1.0 released (Github version)
+
+</p>
+</details>
