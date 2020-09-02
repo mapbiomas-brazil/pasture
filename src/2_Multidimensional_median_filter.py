@@ -151,7 +151,7 @@ outputDir = '/data/PASTAGEM/mapbiomas_col5_pasture/OUTPUT'
 files = ['Y1985_planted.tif','Y1986_planted.tif','Y1987_planted.tif','Y1988_planted.tif','Y1989_planted.tif','Y1990_planted.tif','Y1991_planted.tif','Y1992_planted.tif','Y1993_planted.tif','Y1994_planted.tif','Y1995_planted.tif','Y1996_planted.tif','Y1997_planted.tif','Y1998_planted.tif','Y1999_planted.tif','Y2000_planted.tif','Y2001_planted.tif','Y2002_planted.tif','Y2003_planted.tif','Y2004_planted.tif','Y2005_planted.tif','Y2006_planted.tif','Y2007_planted.tif','Y2008_planted.tif','Y2009_planted.tif','Y2010_planted.tif','Y2011_planted.tif','Y2012_planted.tif','Y2013_planted.tif','Y2014_planted.tif','Y2015_planted.tif','Y2016_planted.tif','Y2017_planted.tif','Y2018_planted.tif','Y2019_planted.tif']
 
 startRow = int(sys.argv[1])
-endRow = int(sys.argv[2])
+endRow = startRow + int(sys.argv[2])
 
 log("Starting")
 
