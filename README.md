@@ -38,7 +38,7 @@ You have 2 options for make your classification:
 
 ### Using Python with GEE
 
-Before run the first python code, change the parameters bellow with as you wish:
+Before executing the first Python code, change the parameters below as desired:
 ```python
 
  # Build an file with Landsat WRS scenes you wanna use or you can uncomment the tiles used
@@ -57,11 +57,11 @@ Open the console terminal (Prompt on Windows) and run the these line: **python3 
 ### Using JavaScript in GEE
 * [Acess this link](https://code.earthengine.google.com/0c97565dcb06e343589451d08c3a4816) and, as you wish, change the parameters of ***year***, ***landsatWRSPath***, ***landsatWRSRow***, ***my_folder***. After that you can click in **Run** and export your result in **Task**.
 
-Also, you can change the training dataset (cultivated and natural) changing the variable ***TRAIN_DATA*** (line 9).
+Also, you can change the training dataset (cultivated and natural) by changing the variable ***TRAIN_DATA*** (line 9).
 
 ## 2. Prepare the data for Multidimensional Median Filter
 
-Mosaic the classifications files by year using the binaries **gdalbuildvrt** and **gdal_translate*. E.g.:
+Merge the classifications files by year using the binaries **gdalbuildvrt** and **gdal_translate*. E.g.:
 
  * gdalbuildvrt lapig_pasture_map_<year xxxx>.vrt *_<year xxxx>_*.tif
  * gdal_translate lapig_pasture_map_<year xxxx>.vrt lapig_pasture_map_<year xxxx>.tif -co COMPRESS=LZW -co BIGTIFF=YES
