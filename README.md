@@ -34,6 +34,8 @@ This repository organizes the pasture mapping codes used by [Laboratório de Pro
 <summary> <b>Changelog</b> </summary>
 <p>
 
+* Version 1.0 released (Github version)
+
 </p>
 </details>
 
