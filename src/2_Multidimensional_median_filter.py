@@ -146,18 +146,10 @@ def log(*arg):
 def formatTime(timeValue):
   return str(round( (timeValue),2))
 
-##inputDir = '/data/DADOS_GRID/mapbiomas_col5_pasture/mapbiomas_col5_mosaics'
-#inputDir = '/data/DADOS_GRID/mapbiomas_col5_pasture/mapbiomas_col5_mosaics'
-#outputDir = '/data/DADOS_GRID/mapbiomas_col5_pasture/mapbiomas_col5_pasture_filtered'
-##files = ['1985L5.tif','1986L5.tif','1987L5.tif','1988L5.tif','1989L5.tif','1990L5.tif','1991L5.tif','1992L5.tif','1993L5.tif','1994L5.tif','1995L5.tif','1996L5.tif','1997L5.tif','1998L5.tif','1999L5.tif','2000L7.tif','2001L7.tif','2002L7.tif','2003L5.tif','2004L5.tif','2005L5.tif','2006L5.tif','2007L5.tif','2008L5.tif','2009L5.tif','2010L5.tif','2011L5.tif','2012L7.tif','2013L8.tif','2014L8.tif','2015L8.tif','2016L8.tif','2017L8.tif']
-#files = ['2014L8.tif','2015L8.tif','2016L8.tif','2017L8.tif','2018L8.tif','2019L8.tif']
-
 inputDir = '/data/DADOS_GRID/mapbiomas_col5_pasture_v2/INPUT'
 outputDir = '/data/DADOS_GRID/mapbiomas_col5_pasture_v2/OUTPUT'
 files = ['Y1985_planted.tif','Y1986_planted.tif','Y1987_planted.tif','Y1988_planted.tif','Y1989_planted.tif','Y1990_planted.tif','Y1991_planted.tif','Y1992_planted.tif','Y1993_planted.tif','Y1994_planted.tif','Y1995_planted.tif','Y1996_planted.tif','Y1997_planted.tif','Y1998_planted.tif','Y1999_planted.tif','Y2000_planted.tif','Y2001_planted.tif','Y2002_planted.tif','Y2003_planted.tif','Y2004_planted.tif','Y2005_planted.tif','Y2006_planted.tif','Y2007_planted.tif','Y2008_planted.tif','Y2009_planted.tif','Y2010_planted.tif','Y2011_planted.tif','Y2012_planted.tif','Y2013_planted.tif','Y2014_planted.tif','Y2015_planted.tif','Y2016_planted.tif','Y2017_planted.tif','Y2018_planted.tif','Y2019_planted.tif']
-#
 
-#tile = sys.argv[1]
 startRow = int(sys.argv[1])
 endRow = int(sys.argv[2])
 
