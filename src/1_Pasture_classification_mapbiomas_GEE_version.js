@@ -51,8 +51,8 @@ var getNeibArea = function() {
   var wrs_path = ee.List.sequence(parseInt(landsatWRSPath)-xW[0], parseInt(landsatWRSPath) + xW[1])
   var wrs_row = ee.List.sequence(parseInt(landsatWRSRow)-xW[0], parseInt(landsatWRSRow) + xW[1])
 
-  for (var pInc = (parseInt(landsatWRSPath)-xW[0]) ; pInc < (parseInt(landsatWRSPath) + xW[1]); pInc++){
-    for (var rInc = (parseInt(landsatWRSRow)-yW[0]) ; rInc < (parseInt(landsatWRSRow) + yW[1]); rInc++){
+  for (var pInc = (parseInt(landsatWRSPath)-xW[0]) ; pInc < (parseInt(landsatWRSPath) + xW[1] + 1); pInc++){
+    for (var rInc = (parseInt(landsatWRSRow)-yW[0]) ; rInc < (parseInt(landsatWRSRow) + yW[1] + 1); rInc++){
       
       var pAux = pInc
       var rAux = rInc;
@@ -248,7 +248,7 @@ var getFeatureSpace = function() {
 
   }
   
-    var neibCollection = ee.ImageCollection(neibData).filter(ee.Filter.gt('BandNumber',0)).mosaic()
+    var neibCollection = ee.ImageCollection(neibData).filter(ee.Filter.gt('BandNumber',0)).mosaic().clip(getSamplingArea())
     var wetSpectralTemporalData = neibCollection.clip(LANDSAT_GRID.filter(ee.Filter.eq('TILE_T','T' +landsatWRSPath+landsatWRSRow)))
     
     print(neibCollection)
@@ -342,6 +342,8 @@ var samplingArea = getSamplingArea()
 
 var neighborhoodArea = getNeibArea()
 
+print(neighborhoodArea)
+
 var classificationArea = getClassificationArea();
 
 var featureSpace = getFeatureSpace();
@@ -349,6 +351,7 @@ var featureSpace = getFeatureSpace();
 var trainSamples = getTrainSamples();
 
 var classifier = getTrainedClassifier();
+
 var pastureContinuousResult = classify();
 
 var pastureResult = pastureContinuousResult.gte(pastureMapThreshold);
