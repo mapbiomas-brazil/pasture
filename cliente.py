@@ -64,22 +64,9 @@ while len(in_queue)+len(runnig) > 0:
         runnig[id_] = task_id
         print(f'add task ID:{id_} gee_id:{task_id}')
         
-    sleep(2)
+    sleep(5)
+
     check_tasks()
-    tmp = runnig.copy()
-    for i in tmp:
-        try:
-            data = get(f'http://{settings.SERVER}:{settings.PORT}/state/{i}')
-            if data.status_code == 200:
-                state = data.json()['state']
-                if state == 'COMPLETED':
-                    del runnig[i]
-        except json.decoder.JSONDecodeError:
-            ERRORS = ERRORS + 1
-        except requests.exceptions.ConnectionError:
-            ERRORS = ERRORS + 1
-    print(runnig)
-    sleep(3)
     print(f'Errors = {ERRORS}')
     if ERRORS >=25:
         exit(1)
