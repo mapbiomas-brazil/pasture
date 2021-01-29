@@ -81,7 +81,7 @@ config = {
 							,	{ "name": 'nir', "expression": ExpCalc['B5']}
 							,	{ "name": 'swir1', "expression": ExpCalc['B6_L8']}
 							,	{ "name": 'swir2', "expression":ExpCalc['B7']}
-							,	{ "name": 'ndvi', "expression": ExpCalc['NDVI_L8']}
+							,	{ "name": 'ndvi', "expression": ExpCalc['NDVI_']}
 							,	{ "name": 'ndwi', "expression": ExpCalc['NDWI_L8']}
 							,	{ "name": 'cai', "expression": ExpCalc['CAI_L8']}
 						]
@@ -659,7 +659,7 @@ config = {
 		, "gapfillValue": -1
 	}
 	, "trainning": {
-			"scale": 30
+		"scale": 30
 		, "nPoints": 2700
 		, "gridCellSize": 3
 		, "classValues": [1,0]

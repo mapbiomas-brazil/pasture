@@ -10,7 +10,7 @@ from random import randint
 
 version = settings.VERSION
 ERRORS = 0
-MAXRUN = 5
+MAXRUN = 8
 
 try:
     in_queue = get(f'http://{settings.SERVER}:{settings.PORT}/get_tasks').json()
@@ -67,6 +67,7 @@ while len(in_queue)+len(runnig) > 0:
     sleep(5)
 
     check_tasks()
+    print(runnig)
     print(f'Errors = {ERRORS}')
     if ERRORS >=25:
         exit(1)
