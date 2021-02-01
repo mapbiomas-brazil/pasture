@@ -1,14 +1,14 @@
 from flask import Blueprint, current_app, request, jsonify
 from .model import Task
 import ee
-from .Functions import type_process
+from Lapig.Functions import type_process, login_gee
 from dynaconf import settings
-from pathlib import Path
+from sys import exit
 
-credentials = ee.ServiceAccountCredentials(
-    settings.GMAIL, 
-    f"{str(Path.home())}/{settings.PRIVATEKEY}")
-ee.Initialize()
+
+
+login_gee(ee)
+
 
 bp_task = Blueprint('task', __name__)
 
@@ -19,7 +19,7 @@ def id_(version,name):
 
 
 
-@bp_task.route('/get_tasks', methods=['GET'])
+@bp_task.route('/get', methods=['GET'])
 def get_tasks():
     task = Task.objects(state='IN_QUEUE').all()
     if not task:
@@ -29,7 +29,9 @@ def get_tasks():
 
 @bp_task.route('/runnig', methods=['GET'])
 def get_runnig():
-    task = Task.objects(state='RUNNING').all()
+    task = Task.objects(
+        version = settings.VERSION,
+        state='RUNNING').all()
     if not task:
         return jsonify({})
     else:
@@ -63,6 +65,7 @@ def update_record():
         task.update(
             state = state,
             task_id = task_id)
+        bp_task.logger.info(f'Update na Task: {task_id}')
     return task.to_json()
 
 
@@ -78,13 +81,16 @@ def add():
     return jsonify(task.to_json())
 
 
-@bp_task.route('/check_tasks', methods=['GET', 'POST'])
+@bp_task.route('/check', methods=['GET', 'POST'])
 def check_tasks():
-    tasks = Task.objects(state__ne = 'COMPLETED').all()
+    tasks = Task.objects(
+        version = settings.VERSION,
+        state__ne = 'COMPLETED',
+        task_id__ne = 'None').all()
     queue = []
     for i in tasks:
-        if not i.task_id == 'None':
-            state = ee.batch.Task(i.task_id,'','').status()['state']
-            i.update(state=type_process(state))
-            queue.append(i.to_json())
+        state = ee.batch.Task(i.task_id,'','').status()['state']
+        i.update(state=type_process(state))
+        queue.append(i.to_json())
+        
     return jsonify(queue)

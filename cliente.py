@@ -10,13 +10,13 @@ from random import randint
 
 version = settings.VERSION
 ERRORS = 0
-MAXRUN = 8
+MAXRUN = settings.QUANTITY_ALLOWED_IN_QUEUE
 
 try:
-    in_queue = get(f'http://{settings.SERVER}:{settings.PORT}/get_tasks').json()
-    runnig = get(f'http://{settings.SERVER}:{settings.PORT}/runnig').json()
+    in_queue = get(f'http://{settings.SERVER}:{settings.PORT}/task/get').json()
+    runnig = get(f'http://{settings.SERVER}:{settings.PORT}/task/runnig').json()
 except json.decoder.JSONDecodeError:
-    print('error init')
+    print('Servido não esta respondendo de forma correta')
     exit()
 except requests.exceptions.ConnectionError:
     print('Servidor Fora do ar')
@@ -25,8 +25,8 @@ except requests.exceptions.ConnectionError:
 def get_info(in_queue,runnig):
     global ERRORS
     try:
-        in_queue = get(f'http://{settings.SERVER}:{settings.PORT}/get_tasks').json()
-        runnig = get(f'http://{settings.SERVER}:{settings.PORT}/runnig').json()
+        in_queue = get(f'http://{settings.SERVER}:{settings.PORT}/task/get').json()
+        runnig = get(f'http://{settings.SERVER}:{settings.PORT}/task/runnig').json()
         return in_queue,runnig
     except json.decoder.JSONDecodeError:
         ERRORS = ERRORS + 1
@@ -39,7 +39,7 @@ def get_info(in_queue,runnig):
 def check_tasks():
     global ERRORS
     try:
-        g = get(f'http://{settings.SERVER}:{settings.PORT}/check_tasks')
+        g = get(f'http://{settings.SERVER}:{settings.PORT}/task/check')
         if g.status_code != 200:
             ERRORS = ERRORS + 1
     except json.decoder.JSONDecodeError:
@@ -64,9 +64,7 @@ while len(in_queue)+len(runnig) > 0:
         runnig[id_] = task_id
         print(f'add task ID:{id_} gee_id:{task_id}')
         
-    sleep(5)
-
-    check_tasks()
+    sleep(1)
     print(runnig)
     print(f'Errors = {ERRORS}')
     if ERRORS >=25:

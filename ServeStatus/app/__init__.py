@@ -17,7 +17,10 @@ def create_app():
 
 
     from .task import bp_task
-    app.register_blueprint(bp_task)
+    app.register_blueprint(bp_task, url_prefix='/task')
+
+    from .config import bp_config
+    app.register_blueprint(bp_config)
 
 
     return app
