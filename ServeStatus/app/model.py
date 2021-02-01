@@ -17,3 +17,9 @@ class Task(db.Document):
     num = db.IntField()
 
     # version,name,task.state,task.id
+
+class Config(db.Document):
+    id_ = db.StringField()
+    list_task = db.ListField(db.StringField(max_length=50))
+    version = db.StringField()
+    QUANTITY_ALLOWED_IN_QUEUE = db.IntField()

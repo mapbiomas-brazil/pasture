@@ -52,11 +52,22 @@ LISTA_CARTAS = ['NA-19-Y-B','NA-19-Y-D','NA-19-Z-A','NA-19-Z-B','NA-19-Z-C','NA-
 'SG-22-Z-C','SG-22-Z-D','SG-23-V-C','SH-21-V-D','SH-21-X-A','SH-21-X-B','SH-21-X-C','SH-21-X-D','SH-21-Z-B','SH-21-Z-C',
 'SH-21-Z-D','SH-22-V-A','SH-22-V-B','SH-22-V-C','SH-22-V-D','SH-22-X-A','SH-22-X-B','SH-22-X-D','SH-22-Y-A','SH-22-Y-B',
 'SH-22-Y-C','SH-22-Z-A','SI-22-V-A','SI-22-V-B','SI-22-V-C']
+
+
+
+QUANTITY_ALLOWED_IN_QUEUE = 2
 VERSION = 'V003'
+
 PRIVATEKEY = '.lapig_api/privatekey.json'
+IS_LOGIN_MANUAL = false
+
 DB = 'task_lapig'
 DB_HOST = 'localhost'
 DB_PORT = 27017
+
+
+
+
 
 SERVER = "flaskdynaconf.com"
 PORT = 6666
