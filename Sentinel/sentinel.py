@@ -1,21 +1,13 @@
 import ee
 from dynaconf import settings
 from Lapig.Lapig import HelpLapig
-from Lapig.Functions import type_process
+from Lapig.Functions import type_process, login_gee
 from requests import post
-from pathlib import Path
 from sys import exit
 
-try:
-    credentials = ee.ServiceAccountCredentials(
-        "nxgame2009@gmail.com",  # settings.GMAIL,
-        f"{str(Path.home())}/{settings.PRIVATEKEY}",
-    )
-    ee.Initialize()
-except FileNotFoundError as e:
-    print(e)
-    exit(1)
 
+
+login_gee(ee)
 
 cartas = ee.FeatureCollection(
     "users/vieiramesquita/LAPIG-PASTURE/VECTORS/CARTAS_IBGE_BR_mod"
@@ -26,13 +18,11 @@ Lapig = HelpLapig(ee)
 sat = "SENTINEL"
 lista_cartas = settings.LISTA_CARTAS
 
-list_size = 1
-
-cartas_list = cartas.toList(list_size)
+cartas_list = cartas.toList(len(lista_cartas))
 
 
-def generate_image(num, name):
-    cartas_area = ee.Feature(cartas_list.get(cartaNm))
+def generate_image(cartaNm, name):
+    cartas_area = ee.Feature(ee.Filter.eq('grid_name',lista_cartas[cartaNm]))
     cartas_buffer = cartas.filterBounds(cartas_area.geometry().buffer(75000))
 
     TRAIN_DATA = ee.FeatureCollection(
@@ -193,4 +183,4 @@ def get_Exports(version, num, name):
         "num": num,
     }
 
-    return task.id, post(f"http://{settings.SERVER}:{settings.PORT}/update", json=rest)
+    return task.id, post(f"http://{settings.SERVER}:{settings.PORT}/task/update", json=rest)
