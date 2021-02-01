@@ -18,7 +18,7 @@ Lapig = HelpLapig(ee)
 sat = "SENTINEL"
 lista_cartas = settings.LISTA_CARTAS
 
-cartas_list = cartas.toList(len(lista_cartas))
+cartas_list = cartas#.toList(len(lista_cartas))
 
 
 def generate_image(cartaNm, name):
