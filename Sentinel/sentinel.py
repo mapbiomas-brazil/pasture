@@ -9,10 +9,14 @@ from sys import exit
 
 login_gee(ee)
 
+# Imports GEE
 cartas = ee.FeatureCollection(
     "users/vieiramesquita/LAPIG-PASTURE/VECTORS/CARTAS_IBGE_BR_mod"
 )
-
+TRAIN_DATA = ee.FeatureCollection(
+        "users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_cultivado_QGIS_new_pampa_v2"
+)
+# End Imports GEE
 
 Lapig = HelpLapig(ee)
 sat = "SENTINEL"
@@ -25,9 +29,7 @@ def generate_image(cartaNm, name):
     cartas_area = ee.Feature(ee.Filter.eq('grid_name',lista_cartas[cartaNm]))
     cartas_buffer = cartas.filterBounds(cartas_area.geometry().buffer(75000))
 
-    TRAIN_DATA = ee.FeatureCollection(
-        "users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_cultivado_QGIS_new_pampa_v2"
-    )
+    
 
     rfNTrees = 500
     # Number of random trees;
