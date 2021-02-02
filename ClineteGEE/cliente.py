@@ -1,8 +1,8 @@
 from Sentinel.sentinel import get_Exports
+from dynaconf import settings
+
 from requests import post,get
 from time import sleep
-from dynaconf import settings
-from os import environ 
 import json
 from sys import exit
 import requests
@@ -22,36 +22,13 @@ except requests.exceptions.ConnectionError:
     print('Servidor Fora do ar')
     exit(1)
 
-def get_info(in_queue,runnig):
-    global ERRORS
-    try:
-        in_queue = get(f'http://{settings.SERVER}:{settings.PORT}/task/get').json()
-        runnig = get(f'http://{settings.SERVER}:{settings.PORT}/task/runnig').json()
-        return in_queue,runnig
-    except json.decoder.JSONDecodeError:
-        ERRORS = ERRORS + 1
-        return in_queue,runnig
-    except requests.exceptions.ConnectionError:
-        print('Servidor Fora do ar')
-        ERRORS = ERRORS + 1
-        return in_queue,runnig
 
-def check_tasks():
-    global ERRORS
-    try:
-        g = get(f'http://{settings.SERVER}:{settings.PORT}/task/check')
-        if g.status_code != 200:
-            ERRORS = ERRORS + 1
-    except json.decoder.JSONDecodeError:
-        ERRORS = ERRORS + 1
-    except requests.exceptions.ConnectionError:
-        ERRORS = ERRORS + 1
 
 
 
 while len(in_queue)+len(runnig) > 0:
-    check_tasks()
-    in_queue,runnig = get_info(in_queue,runnig)
+    check_tasks(ERRROS)
+    in_queue,runnig = get_info(in_queue,runnig,ERRROS)
     if len(runnig) < MAXRUN and len(in_queue) > 0:
         if len(in_queue) > 1:
             n = randint(0,len(in_queue))
