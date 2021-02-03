@@ -9,6 +9,8 @@ def type_process(type_):
         return 'COMPLETED'
     return 'IN_QUEUE'
     
+def id_(version,name):
+    return f'{version}_{name}'
 
 def login_gee(ee):
     try:

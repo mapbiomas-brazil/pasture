@@ -1,6 +1,6 @@
 from flask import Flask
 from dynaconf import settings
-from .model import configure as config_db
+from ServeStatus.app.model import configure as config_db
 
 
 
@@ -16,10 +16,10 @@ def create_app():
     config_db(app)
 
 
-    from .task import bp_task
+    from ServeStatus.app.task import bp_task
     app.register_blueprint(bp_task, url_prefix='/task')
 
-    from .config import bp_config
+    from ServeStatus.app.config import bp_config
     app.register_blueprint(bp_config)
 
 

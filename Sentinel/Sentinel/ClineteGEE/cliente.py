@@ -1,9 +1,11 @@
-from Sentinel.sentinel import get_Exports
-from loguru import logger
+from Lapig.sentinel import get_Exports
 from ClineteGEE.functions import get_info, check_tasks
+
+from loguru import logger
+from dynaconf import settings
+
 from requests import post,get
 from time import sleep
-from dynaconf import settings
 from os import environ 
 import json
 from sys import exit

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pasture"
+name = "Sentinel"
 version = "0.1.2"
 description = "This repository organizes the pasture mapping codes developed by Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG/UFG). The methology used by LAPIG team is avaliable in the paper of PARENTE et al. (2017)"
 authors = ["Vinícius Mesquita, Jairo Matos da Rocha"]

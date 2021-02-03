@@ -1,5 +1,5 @@
 from flask import Blueprint, current_app, request, jsonify
-from .model import Task
+from ServeStatus.app.model import Task
 import ee
 from Lapig.Functions import type_process, login_gee
 from dynaconf import settings
