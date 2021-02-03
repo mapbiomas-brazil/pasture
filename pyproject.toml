@@ -15,6 +15,7 @@ geetools = "^0.6.7"
 flask_mongoengine = "^1.0.0"
 black = "^20.8b1"
 loguru = "^0.5.3"
+python-dotenv = "^0.15.0"
 
 
 [tool.poetry.dev-dependencies]
