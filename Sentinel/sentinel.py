@@ -1,9 +1,11 @@
 import ee
+from loguru import logger
 from dynaconf import settings
 from Lapig.Lapig import HelpLapig
 from Lapig.Functions import type_process, login_gee
 from requests import post
 from sys import exit
+
 
 
 
@@ -13,9 +15,19 @@ login_gee(ee)
 cartas = ee.FeatureCollection(
     "users/vieiramesquita/LAPIG-PASTURE/VECTORS/CARTAS_IBGE_BR_mod"
 )
-TRAIN_DATA = ee.FeatureCollection(
-        "users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_cultivado_QGIS_new_pampa_v2"
-)
+mapbiomas_train = (ee.FeatureCollection("users/vieiramesquita/TrainingSamples/mapbiomas_85k_plus_rare_noEdge_and_stable_10years")
+  .remap(['Afloramento Rochoso', 'Apicum', 'Cultura Anual', "Lavoura Temporária", 'Cultura Perene', "Lavoura Perene", 'Cultura Semi-Perene', 'Floresta Plantada', 'Formação Campestre', 'Formação Florestal', 'Formação Savânica', 'Infraestrutura Urbana', 'Mangue', 'Mineração', 'Outra Formação Natural Não Florestal', "Outra Formação Não Florestal", 'Outra Área Não Vegetada', 'Outra Área não Vegetada', 'Pastagem Cultivada', 'Praia e Duna', 'Rio, Lago e Oceano', "Área Úmida Natural não Florestal", "Campo Alagado e Área Pantanosa", 'Aquicultura' ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    'CLASS_2016')
+  .remap(['Afloramento Rochoso', 'Apicum', 'Cultura Anual', "Lavoura Temporária", 'Cultura Perene', "Lavoura Perene", 'Cultura Semi-Perene', 'Floresta Plantada', 'Formação Campestre', 'Formação Florestal', 'Formação Savânica', 'Infraestrutura Urbana', 'Mangue', 'Mineração', 'Outra Formação Natural Não Florestal', "Outra Formação Não Florestal", 'Outra Área Não Vegetada', 'Outra Área não Vegetada', 'Pastagem Cultivada', 'Praia e Duna', 'Rio, Lago e Oceano', "Área Úmida Natural não Florestal", "Campo Alagado e Área Pantanosa", 'Aquicultura' ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    'CLASS_2017')
+  .remap(['Afloramento Rochoso', 'Apicum', 'Cultura Anual', "Lavoura Temporária", 'Cultura Perene', "Lavoura Perene", 'Cultura Semi-Perene', 'Floresta Plantada', 'Formação Campestre', 'Formação Florestal', 'Formação Savânica', 'Infraestrutura Urbana', 'Mangue', 'Mineração', 'Outra Formação Natural Não Florestal', "Outra Formação Não Florestal", 'Outra Área Não Vegetada', 'Outra Área não Vegetada', 'Pastagem Cultivada', 'Praia e Duna', 'Rio, Lago e Oceano', "Área Úmida Natural não Florestal", "Campo Alagado e Área Pantanosa", 'Aquicultura' ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    'CLASS_2018'))
+
+TRAIN_DATA = mapbiomas_train
+
 # End Imports GEE
 
 Lapig = HelpLapig(ee)
@@ -134,7 +146,7 @@ def generate_image(cartaNm, name):
 
     #######################################/
 
-    classFieldName = "cons_2017"
+    classFieldName = "CLASS_2018"
 
     trainSamples = TRAIN_DATA.select(classFieldName).filterBounds(cartas_buffer)
 
@@ -164,25 +176,37 @@ def generate_image(cartaNm, name):
 
 def get_Exports(version, num, name):
     ROI, imgae = generate_image(num, name)
-    task = ee.batch.Export.image.toDrive(
+    task = ee.batch.Export.image.toCloudStorage(
         **{
             "image": imgae,
-            "description": f"pastureMapping_S2_col6_2020_{name}",
-            "folder": "pastureMapping_S2_col6_2020",
-            "fileNamePrefix": f"{version}-pastureMapping_S2_col6_2020_{name}",
+            "description": f"pastureMapping_S2_col6_2020_85k_{name}",
+            "bucket": "mapbiomas",
+            "fileNamePrefix": f"mapbiomas-public-temp/COLECAO/SENTINEL/PASTURE/pastureMapping_S2_col6_2020_85k_{name}",
             "region": ROI,
             "scale": 10,
             "maxPixels": 1.0e13,
         }
     )
-    task.start()
-    rest = {
-        "id_": f"{version}_{name}",
-        "version": version,
-        "name": name,
-        "state": type_process(task.state),
-        "task_id": task.id,
-        "num": num,
-    }
+    try:
+        task.start()
+        rest = {
+            "id_": f"{version}_{name}",
+            "version": version,
+            "name": name,
+            "state": type_process(task.state),
+            "task_id": task.id,
+            "num": num,
+        }
+        return task.id, post(f"http://{settings.SERVER}:{settings.PORT}/task/update", json=rest)
+    except Exception as e:
+        rest = {
+            "id_": f"{version}_{name}",
+            "version": version,
+            "name": name,
+            "state": 'None',
+            "task_id": task.id,
+            "num": num,
+        }
+        logger.warning(f'Error ao exporta, dados recebidp{rest} error:{e}')
+        return 'None', post(f"http://{settings.SERVER}:{settings.PORT}/task/update", json=rest)
 
-    return task.id, post(f"http://{settings.SERVER}:{settings.PORT}/task/update", json=rest)
