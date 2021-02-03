@@ -14,7 +14,7 @@ if __name__ == '__main__':
                 'task_id':'None',
                 'num':n,
             }
-        p=post(f'http://{settings.SERVER}:{settings.PORT}/add',json= rest)
+        p=post(f'http://{settings.SERVER}:{settings.PORT}/task/add',json= rest)
         print(p.text)
         print(rest)
 
