@@ -13,7 +13,7 @@ def get_info(in_queue,runnig,ERRROS):
         ERRORS = ERRORS + 1
         return in_queue,runnig
     except requests.exceptions.ConnectionError:
-        print('Servidor Fora do ar')
+        logger.warning('Servidor Fora do ar')
         ERRORS = ERRORS + 1
         return in_queue,runnig
 
