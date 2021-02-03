@@ -4,7 +4,7 @@ import ee
 from Lapig.Functions import type_process, login_gee
 from dynaconf import settings
 from sys import exit
-
+import urllib3
 
 
 login_gee(ee)
@@ -35,9 +35,7 @@ def get_runnig():
     if not task:
         return jsonify({})
     else:
-        runnig = {}
-        for i in task:
-            runnig[i.id_] = i.task_id
+        runnig = {i.id_:i.task_id for i in task}
         return runnig,200, {'ContentType':'application/json'} 
 
 
@@ -55,7 +53,7 @@ def get_state(id):
 @bp_task.route('/update', methods=['POST'])
 def update_record():
     record = request.json
-    print(record)
+    # print(record)
     task = Task.objects(id_=record['id_']).first()
     if not task:
         return jsonify({'error': 'data not found'})
@@ -65,7 +63,7 @@ def update_record():
         task.update(
             state = state,
             task_id = task_id)
-        bp_task.logger.info(f'Update na Task: {task_id}')
+        current_app.logger.warning(f'Update na Task: {task_id}')
     return task.to_json()
 
 
@@ -88,8 +86,16 @@ def check_tasks():
         state__ne = 'COMPLETED',
         task_id__ne = 'None').all()
     queue = []
-    for i in tasks:
-        state = ee.batch.Task(i.task_id,'','').status()['state']
+    tasks_in_queue ={i.task_id:i for i in tasks}
+    try:
+        all_task = ee.batch.Task.list()
+    except urllib3.exceptions.ProtocolError:
+        current_app.logger.warning('Error login no GEE na hora de checkar as task')
+        return jsonify([])
+    gee_task = {i.id:i.state for i in all_task if i.id in list(tasks_in_queue)}
+    for id_ in tasks_in_queue:
+        i = tasks_in_queue[id_]
+        state = gee_task[id_]
         i.update(state=type_process(state))
         queue.append(i.to_json())
         

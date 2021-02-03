@@ -18,7 +18,6 @@ def login_gee(ee):
     except ee.ee_exception.EEException as e:
         print('Login fall',e)
         __login_manual(ee)
-        exit(1)
 
 
 def __login_manual(ee):

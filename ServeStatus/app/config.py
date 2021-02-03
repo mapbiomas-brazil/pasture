@@ -12,8 +12,11 @@ from sys import exit
 login_gee(ee)
 
 
-bp_config = Blueprint('config', __name__)
+def id_(version,name):
+    return f'{version}_{name}'
 
+
+bp_config = Blueprint('config', __name__)
 
 @bp_config.route('/generate_task_list', methods=['GET'])
 def generate_task_list():
@@ -31,7 +34,7 @@ def generate_task_list():
                 rest['name']),
                 **rest)
             task.save()
-            bp_config.logger.info(f'Add {task.json}')
+            #bp_config.logger.info(f'Add {task.json}')
         return jsonify({'state':'sucesso'}),201
     except Exception as e:
         return jsonify({'error': str(e) ,
