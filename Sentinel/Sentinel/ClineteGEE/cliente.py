@@ -1,5 +1,5 @@
 from Lapig.sentinel import get_Exports
-from ClineteGEE.functions import get_info, check_tasks
+from ClineteGEE.functions import get_info, check_tasks, Error
 
 from loguru import logger
 from dynaconf import settings
@@ -17,7 +17,7 @@ from random import choice
 
 def main():
     version = settings.VERSION
-    ERRORS = 0
+    ERRORS = Error()
     MAXRUN = settings.QUANTITY_ALLOWED_IN_QUEUE
     try:
         in_queue = get(f'http://{settings.SERVER}:{settings.PORT}/task/get').json()
@@ -47,9 +47,17 @@ def main():
             
             
         sleep(1)
+        try:
+            completed = get(f'http://{settings.SERVER}:{settings.PORT}/task/completed').json()
+            c_len = completed[0]['completed']
+            falta = completed[0]['falta']
+            len_errors = completed[0]['errors']
+            logger.info(f'Foi completado {c_len} task, falta {falta} task, falhou {len_errors} task')
+        except Exception as e:
+            logger.warning(f'{e}')
         logger.info(f'Estamos processando {len(runnig)}')
-        logger.info(f'Errors = {ERRORS}')
-        if ERRORS >=25:
+        logger.info(f'Errors = {ERRORS.get()}')
+        if ERRORS.get() >=25:
             exit(1)
         
     logger.info('Finalizado')

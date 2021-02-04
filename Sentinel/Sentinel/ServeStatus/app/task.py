@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app, request, jsonify
 from ServeStatus.app.model import Task
 import ee
-from Lapig.Functions import type_process, login_gee
+from Lapig.Functions import type_process, login_gee, error_in_task
 from dynaconf import settings
 from sys import exit
 import urllib3
@@ -37,6 +37,49 @@ def get_runnig():
     else:
         runnig = {i.id_:i.task_id for i in task}
         return runnig,200, {'ContentType':'application/json'} 
+
+@bp_task.route('/completed', methods=['GET'])
+def get_completed():#completed
+    task = Task.objects(
+        version = settings.VERSION,
+        state='COMPLETED').all()
+    error = Task.objects(
+        version = settings.VERSION,
+        state='ERROR').all()
+    len_error = len(error)
+    if not error:
+        len_error = 0
+        error = {}
+    else:
+        error = {i.id_:i.task_id for i in error}
+    if not task:
+        return jsonify([{'len':0, 'falta':len(settings.LISTA_CARTAS)},{'task':{}}])
+    else:
+        completed = {i.id_:i.task_id for i in task}
+        tamanho=len(completed)
+        return jsonify([{
+            'completed':tamanho,
+            'errors': len_error,
+            'falta':(len(settings.LISTA_CARTAS) - (tamanho+len_error))
+            },{
+                'task_ok':completed,
+                'task_error': error
+        }]) ,200, {'ContentType':'application/json'} 
+
+
+@bp_task.route('/errors', methods=['GET'])
+def get_errors():#errors
+    task = Task.objects(
+        version = settings.VERSION,
+        state='ERROR').all()
+    if not task:
+        return jsonify([{'len':0},{'task':{}}])
+        
+    else:
+        errors = {i.id_:i.task_id for i in task}
+        tamanho=len(errors)
+        return jsonify([{'len':tamanho,'falta':(len(settings.LISTA_CARTAS) - tamanho)},{'task':errors}]) ,200, {'ContentType':'application/json'} 
+
 
 
 
@@ -83,8 +126,7 @@ def add():
 def check_tasks():
     tasks = Task.objects(
         version = settings.VERSION,
-        state__ne = 'COMPLETED',
-        task_id__ne = 'None').all()
+        task_id__ne = 'None').filter(state__ne='COMPLETED').filter(state__ne='ERROR').all()
     queue = []
     tasks_in_queue ={i.task_id:i for i in tasks}
     try:
@@ -93,9 +135,19 @@ def check_tasks():
         current_app.logger.warning('Error login no GEE na hora de checkar as task')
         return jsonify([])
     gee_task = {i.id:i.state for i in all_task if i.id in list(tasks_in_queue)}
+
     for id_ in tasks_in_queue:
         i = tasks_in_queue[id_]
-        state = gee_task[id_]
+        try:
+            state = gee_task[id_]
+            if state == 'FAILED':
+                state = error_in_task(ee.batch.Task(id_,'','').status())
+        except:
+            __task = ee.batch.Task(id_,'','').status()
+            state = __task['state']
+            if state == 'FAILED':
+                state = error_in_task(__task)
+            current_app.logger.warning(f'state obitdo de forma bruta {id_} {state}')
         i.update(state=type_process(state))
         queue.append(i.to_json())
         

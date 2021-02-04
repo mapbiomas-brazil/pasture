@@ -11,19 +11,30 @@ def get_info(in_queue,runnig,ERRORS):
         runnig = get(f'http://{settings.SERVER}:{settings.PORT}/task/runnig').json()
         return in_queue,runnig
     except json.decoder.JSONDecodeError:
-        ERRORS = ERRORS + 1
+        ERRORS.add()
         return in_queue,runnig
     except requests.exceptions.ConnectionError:
         logger.warning('Servidor Fora do ar')
-        ERRORS = ERRORS + 1
+        ERRORS.add()
         return in_queue,runnig
 
 def check_tasks(ERRORS):
     try:
         g = get(f'http://{settings.SERVER}:{settings.PORT}/task/check')
         if g.status_code != 200:
-            ERRORS = ERRORS + 1
+            ERRORS.add()
     except json.decoder.JSONDecodeError:
-        ERRORS = ERRORS + 1
+        ERRORS.add()
     except requests.exceptions.ConnectionError:
-        ERRORS = ERRORS + 1
+        ERRORS.add()
+
+
+class Error():
+    def __init__(self):
+        self.error = 0
+    
+    def get(self):
+        return self.error
+
+    def add(self):
+        self.error = self.error+1

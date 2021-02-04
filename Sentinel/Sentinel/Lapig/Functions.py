@@ -7,8 +7,24 @@ def type_process(type_):
         return 'RUNNING'
     if type_ == 'COMPLETED':
         return 'COMPLETED'
+    if type == 'ERROR':
+        return 'ERROR'
     return 'IN_QUEUE'
     
+def error_in_task(__task):
+    errors = [# Erros que nao poder rodar de novo
+        'Image.classify: No valid training data were found.', 
+        'Unable to write to bucket mapbiomas (permission denied).'
+    ]
+    try:
+        if __task['error_message'] in errors:
+            return 'ERROR'
+        __task['state']
+    except KeyError as e:
+        return __task['state']
+            
+
+
 def id_(version,name):
     return f'{version}_{name}'
 

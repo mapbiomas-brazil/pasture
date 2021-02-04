@@ -38,7 +38,8 @@ cartas_list = cartas#.toList(len(lista_cartas))
 
 
 def generate_image(cartaNm, name):
-    cartas_area = ee.Feature(ee.Filter.eq('grid_name',lista_cartas[cartaNm]))
+    
+    cartas_area = cartas_list.filter(ee.Filter.eq('grid_name',lista_cartas[cartaNm]))
     cartas_buffer = cartas.filterBounds(cartas_area.geometry().buffer(75000))
 
     
@@ -180,8 +181,8 @@ def get_Exports(version, num, name):
         **{
             "image": imgae,
             "description": f"pastureMapping_S2_col6_2020_85k_{name}",
-            "bucket": "mapbiomas",
-            "fileNamePrefix": f"mapbiomas-public-temp/COLECAO/SENTINEL/PASTURE/pastureMapping_S2_col6_2020_85k_{name}",
+            "bucket": "mapbiomas-public-temp",
+            "fileNamePrefix": f"COLECAO/SENTINEL/PASTURE/pastureMapping_S2_col6_2020_85k_{name}",
             "region": ROI,
             "scale": 10,
             "maxPixels": 1.0e13,
