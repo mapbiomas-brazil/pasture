@@ -12,14 +12,15 @@ from sys import exit
 login_gee(ee)
 
 
-bp_config = Blueprint('config', __name__)
+bp_config = Blueprint('config', __name__,url_prefix ='/config')
+
 
 @bp_config.route('/generate_task_list', methods=['GET'])
 def generate_task_list():
     try:
         queue = []
         
-        for n,i in enumerate(settings.LISTA_CARTAS):
+        for n,i in enumerate(settings.LIST_OF_TASKS):
             rest = {
                     'version':settings.VERSION,
                     'name':str(i),

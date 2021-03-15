@@ -1,7 +1,7 @@
 from flask import Flask
 from dynaconf import settings
 from ServeStatus.app.model import configure as config_db
-
+from ServeStatus.app import controller
 
 
 def create_app():
@@ -14,13 +14,7 @@ def create_app():
         }
 
     config_db(app)
-
-
-    from ServeStatus.app.task import bp_task
-    app.register_blueprint(bp_task, url_prefix='/task')
-
-    from ServeStatus.app.config import bp_config
-    app.register_blueprint(bp_config)
+    controller.init_app(app)
 
 
     return app

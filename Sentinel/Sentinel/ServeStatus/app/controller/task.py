@@ -1,22 +1,14 @@
 from flask import Blueprint, current_app, request, jsonify
 from ServeStatus.app.model import Task
 import ee
-from Lapig.Functions import type_process, login_gee, error_in_task
+from Lapig.Functions import type_process, login_gee, error_in_task, id_
 from dynaconf import settings
 from sys import exit
 import urllib3
 
 
 login_gee(ee)
-
-
-bp_task = Blueprint('task', __name__)
-
-
-def id_(version,name):
-    return f'{version}_{name}'
-
-
+bp_task = Blueprint('task', __name__,url_prefix='/task')
 
 
 @bp_task.route('/get', methods=['GET'])
@@ -53,14 +45,14 @@ def get_completed():#completed
     else:
         error = {i.id_:i.task_id for i in error}
     if not task:
-        return jsonify([{'len':0, 'falta':len(settings.LISTA_CARTAS)},{'task':{}}])
+        return jsonify([{'len':0, 'falta':len(settings.LIST_OF_TASKS)},{'task':{}}])
     else:
         completed = {i.id_:i.task_id for i in task}
         tamanho=len(completed)
         return jsonify([{
             'completed':tamanho,
             'errors': len_error,
-            'falta':(len(settings.LISTA_CARTAS) - (tamanho+len_error))
+            'falta':(len(settings.LIST_OF_TASKS) - (tamanho+len_error))
             },{
                 'task_ok':completed,
                 'task_error': error
@@ -78,7 +70,7 @@ def get_errors():#errors
     else:
         errors = {i.id_:i.task_id for i in task}
         tamanho=len(errors)
-        return jsonify([{'len':tamanho,'falta':(len(settings.LISTA_CARTAS) - tamanho)},{'task':errors}]) ,200, {'ContentType':'application/json'} 
+        return jsonify([{'len':tamanho,'falta':(len(settings.LIST_OF_TASKS) - tamanho)},{'task':errors}]) ,200, {'ContentType':'application/json'} 
 
 
 
@@ -140,6 +132,7 @@ def check_tasks():
         i = tasks_in_queue[id_]
         try:
             state = gee_task[id_]
+            
             if state == 'FAILED':
                 state = error_in_task(ee.batch.Task(id_,'','').status())
         except:

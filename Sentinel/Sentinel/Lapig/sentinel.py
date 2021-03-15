@@ -32,7 +32,7 @@ TRAIN_DATA = mapbiomas_train
 
 Lapig = HelpLapig(ee)
 sat = "SENTINEL"
-lista_cartas = settings.LISTA_CARTAS
+lista_cartas = settings.LIST_OF_TASKS
 
 cartas_list = cartas#.toList(len(lista_cartas))
 

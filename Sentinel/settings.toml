@@ -1,5 +1,5 @@
 [default]
-LISTA_CARTAS = ['NA-19-Y-B','NA-19-Y-D','NA-19-Z-A','NA-19-Z-B','NA-19-Z-C','NA-19-Z-D','NA-20-V-A','NA-20-V-D','NA-20-X-A','NA-20-X-B',
+LIST_OF_TASKS = ['NA-19-Y-B','NA-19-Y-D','NA-19-Z-A','NA-19-Z-B','NA-19-Z-C','NA-19-Z-D','NA-20-V-A','NA-20-V-D','NA-20-X-A','NA-20-X-B',
 'NA-20-X-C','NA-20-X-D','NA-20-Y-A','NA-20-Y-C','NA-20-Y-D','NA-20-Z-A','NA-20-Z-B','NA-20-Z-C','NA-20-Z-D','NA-21-V-A',
 'NA-21-V-C','NA-21-V-D','NA-21-X-C','NA-21-X-D','NA-21-Y-A','NA-21-Y-C','NA-21-Y-D','NA-21-Z-A','NA-21-Z-B','NA-21-Z-C',
 'NA-21-Z-D','NA-22-V-B','NA-22-V-C','NA-22-V-D','NA-22-X-A','NA-22-X-C','NA-22-Y-A','NA-22-Y-B','NA-22-Y-C','NA-22-Y-D',

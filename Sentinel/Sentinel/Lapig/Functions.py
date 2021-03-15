@@ -7,7 +7,7 @@ def type_process(type_):
         return 'RUNNING'
     if type_ == 'COMPLETED':
         return 'COMPLETED'
-    if type == 'ERROR':
+    if type_ == 'ERROR':
         return 'ERROR'
     return 'IN_QUEUE'
     
