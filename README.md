@@ -86,12 +86,12 @@ Because of the high memory consumption, this code works in blocks, so you probab
 
 ### For Unix (Shell):
 ```shell
-for X in {0..145446..2048} do python3 2_Multidimensional_median_filter $X 2048
+for X in {0..145446..2048} do python3 2_Multidimensional_median_filter.py $X 2048
 ```
 
 ### For Windows (DOS - batch):
 ``` dos
-FOR /l %%X in (0,2048,145446) DO python3 2_Multidimensional_median_filter %%X 2048
+FOR /l %%X in (0,2048,145446) DO python3 2_Multidimensional_median_filter.py %%X 2048
 ```
 
 P.S.: It's possible to obtain the image size using the binary *gdalinfo*.
