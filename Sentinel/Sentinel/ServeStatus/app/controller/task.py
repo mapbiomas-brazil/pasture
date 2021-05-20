@@ -32,6 +32,8 @@ def get_runnig():
 
 @bp_task.route('/completed', methods=['GET'])
 def get_completed():#completed
+    all_tasks = len(Task.objects(
+        version = settings.VERSION).all())
     task = Task.objects(
         version = settings.VERSION,
         state='COMPLETED').all()
@@ -45,14 +47,16 @@ def get_completed():#completed
     else:
         error = {i.id_:i.task_id for i in error}
     if not task:
-        return jsonify([{'len':0, 'falta':len(settings.LIST_OF_TASKS)},{'task':{}}])
+        return jsonify([{'completed':0,
+        'errors':0,
+        'len':0, 'falta':all_tasks},{'task_ok':{},'task_error':{}}])
     else:
         completed = {i.id_:i.task_id for i in task}
         tamanho=len(completed)
         return jsonify([{
             'completed':tamanho,
             'errors': len_error,
-            'falta':(len(settings.LIST_OF_TASKS) - (tamanho+len_error))
+            'falta':(all_tasks - (tamanho+len_error))
             },{
                 'task_ok':completed,
                 'task_error': error
