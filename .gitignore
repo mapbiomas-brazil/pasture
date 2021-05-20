@@ -173,3 +173,4 @@ nosetests.xml
 coverage.xml
 
 .secrets*
+Sentinel/lista.txt
