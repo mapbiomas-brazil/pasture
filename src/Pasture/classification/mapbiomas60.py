@@ -2,28 +2,23 @@ from Pasture.help.Lapig import HelpLapig
 from Pasture.help.Functions import login_gee
 import ee
 import sys
+from loguru import logger
 
 def main(settings):
-    print("Start collection 6")
     login_gee(ee)
     help_lapig = HelpLapig(ee)
 
     L8 = ee.ImageCollection("LANDSAT/LC08/C01/T1_TOA")
     L5 = ee.ImageCollection("LANDSAT/LT05/C01/T1_TOA")
     L7 = ee.ImageCollection("LANDSAT/LE07/C01/T1_TOA")
-    LANDSAT_GRID = ee.FeatureCollection(
-        "users/vieiramesquita/LAPIG-PASTURE/VECTORS/LANDSAT_GRID_V2_PASTURE"
-    )
-
-    COL5_TRAIN_DATA_PLANTED = ee.FeatureCollection(
-        "users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_cultivado_QGIS_new_pampa_v2"
-    )
+    LANDSAT_GRID = ee.FeatureCollection(settings.LANDSAT_GRID)
+    COL5_TRAIN_DATA_PLANTED = ee.FeatureCollection(settings.COL5_TRAIN_DATA_PLANTED)
     COL5_TRAIN_DATA_NATURAL = ee.FeatureCollection(
         "users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_natural_QGIS"
     )
 
     COL6_TRAIN_DATA = ee.FeatureCollection(
-        "users/vieiramesquita/LAPIG-PASTURE/VECTORS/mapbiomas_col6_all_stages_10_06_2021_past_cultivado_and_natural_QGIS_v4"
+        settings.COL6_TRAIN_DATA
     )
 
 
@@ -309,8 +304,8 @@ def main(settings):
             **{
                 "image": class_stack.multiply(10000).int16(),
                 "description": name,
-                #'bucket': "mapbiomas-public-temp",
-                "fileNamePrefix": f"COLECAO/LANDSAT/PASTAGEM/V5/pasture_col6_planted_v5_{name}",
+                "fileNamePrefix": name,
+                "folder": settings.FOLDER,
                 "region": classificationArea.geometry().bounds(),
                 "scale": 30,
                 "maxPixels": 1.0e13,
@@ -318,8 +313,8 @@ def main(settings):
         )
         try:
             task.start()
-            print(f"Task send {name}")
+            logger.info(f"A task named {name} has been created and will be saved in the {settings.FOLDER} folder in Google Drive")
         except Exception as e:
-            print(f"Error: {e}")
+            logger.warning(f"Error: {e}")
 
 

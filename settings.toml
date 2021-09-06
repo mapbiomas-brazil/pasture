@@ -1,8 +1,16 @@
 [default]
 
-RFNTREES = 200
-RFBAGFRACTION = 0.5
-RFVARPERSPLIT = 6
+RFNTREES = 200 # Number of random trees;
+RFBAGFRACTION = 0.5 # Fraction (10^-2%) of variables in the bag;
+RFVARPERSPLIT = 6 # Number of varibales per tree branch;
+
+# 
+LANDSAT_GRID = "users/vieiramesquita/LAPIG-PASTURE/VECTORS/LANDSAT_GRID_V2_PASTURE"
+
+
+COL5_TRAIN_DATA_PLANTED = 'users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_cultivado_QGIS_new_pampa_v2'
+COL6_TRAIN_DATA = "users/vieiramesquita/LAPIG-PASTURE/VECTORS/mapbiomas_col6_all_stages_10_06_2021_past_cultivado_and_natural_QGIS_v4"
+
 
 B1 = "((b('B1')<0)*0 + (b('B1') > 1)*1 + (b('B1') >= 0 & b('B1') <= 1)*b('B1'))"
 B2 = "((b('B2')<0)*0 + (b('B2') > 1)*1 + (b('B2') >= 0 & b('B2') <= 1)*b('B2'))"
@@ -17,6 +25,7 @@ NDVI_L8 = "(((b('B5')<0)*0 + (b('B5') > 1)*1 + (b('B5') >= 0 & b('B5') <= 1)*b('
 NDWI_L8 = "(((b('B5')<0)*0 + (b('B5') > 1)*1 + (b('B5') >= 0 & b('B5') <= 1)*b('B5')) - ((b('B6')<0)*0 + (b('B6') > 1)*1 + (b('B6') >= 0 & b('B6') <= 1)*b('B6')))/(((b('B5')<0)*0 + (b('B5') > 1)*1 + (b('B5') >= 0 & b('B5') <= 1)*b('B5')) + ((b('B6')<0)*0 + (b('B6') > 1)*1 + (b('B6') >= 0 & b('B6') <= 1)*b('B6')))"
 NDVI_L5_7 = "(((b('B4')<0)*0 + (b('B4') > 1)*1 + (b('B4') >= 0 & b('B4') <= 1)*b('B4')) - ((b('B3')<0)*0 + (b('B3') > 1)*1 + (b('B3') >= 0 & b('B3') <= 1)*b('B3')))/(((b('B4')<0)*0 + (b('B4') > 1)*1 + (b('B4') >= 0 & b('B4') <= 1)*b('B4')) + ((b('B3')<0)*0 + (b('B3') > 1)*1 + (b('B3') >= 0 & b('B3') <= 1)*b('B3')))"
 NDWI_L5_7 = "(((b('B4')<0)*0 + (b('B4') > 1)*1 + (b('B4') >= 0 & b('B4') <= 1)*b('B4')) - ((b('B5')<0)*0 + (b('B5') > 1)*1 + (b('B5') >= 0 & b('B5') <= 1)*b('B5')))/(((b('B4')<0)*0 + (b('B4') > 1)*1 + (b('B4') >= 0 & b('B4') <= 1)*b('B4')) + ((b('B5')<0)*0 + (b('B5') > 1)*1 + (b('B5') >= 0 & b('B5') <= 1)*b('B5')))"
+
 GRIDLIST = ['T001057','T001058','T001059','T001060','T001061',
 'T001062','T001063','T001064','T001065','T001066','T001067','T002057',
 'T002059','T002060','T002061','T002062','T002063','T002064','T002065',
@@ -77,11 +86,10 @@ GRIDLIST = ['T001057','T001058','T001059','T001060','T001061',
 [collection5]
 START_YEAR = 1985
 END_YEAR = 2017
-TRAIN_DATA = 'users/vieiramesquita/mapbiomas_col3_1_all_stages_12_03_2018_past_cultivado_QGIS_new_pampa_v2'
-
-
+FOLDER = "Pasture_Mapping_Landsat_Col5"
 
 [collection6]
 START_YEAR = 2018
 END_YEAR = 2020
+FOLDER = "Pasture_Mapping_Landsat_Col6"
 

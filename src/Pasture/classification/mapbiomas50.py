@@ -1,10 +1,10 @@
+from loguru import logger
 from Pasture.help.Lapig import HelpLapig
 from Pasture.help.Functions import login_gee
 import ee
 import sys
 
 def main(settings):
-    print("Start collection 5")
     login_gee(ee)
     help_lapig = HelpLapig(ee)
 
@@ -12,24 +12,22 @@ def main(settings):
     L8 = ee.ImageCollection("LANDSAT/LC08/C01/T1_TOA")
     L5 = ee.ImageCollection("LANDSAT/LT05/C01/T1_TOA")
     L7 = ee.ImageCollection("LANDSAT/LE07/C01/T1_TOA")
-    LANDSAT_GRID = ee.FeatureCollection("users/vieiramesquita/LAPIG-PASTURE/VECTORS/LANDSAT_GRID_V2_PASTURE")
 
-    TRAIN_DATA = ee.FeatureCollection(settings.TRAIN_DATA)
+    LANDSAT_GRID = ee.FeatureCollection(settings.LANDSAT_GRID)
+
+    TRAIN_DATA = ee.FeatureCollection(settings.COL5_TRAIN_DATA_PLANTED)
  
 
     def clipCollection(img):
         #wrsProps = ee.Number.parse(img.get('WRS_PATH')).format().cat('/').cat(ee.Number.parse(img.get('WRS_ROW')).format())
         gridSelect = LANDSAT_GRID.filter(ee.Filter.eq('SPRNOME', query_SPRNOME))
         return img.clip(gridSelect)
-    
 
     for  nb_grd in settings.GRIDLIST:
-
         class_stack = ee.Image([0])
 
         landsatWRSPath = nb_grd[1:4]; #Landsat satellite WRS orbital path number (1 - 251) / Works only for Brazil;
         landsatWRSRow = nb_grd[4:7]; # Landsat satellite WRS row (1-248) / Works only for Brazil;
-        
         
 
         #*******************************************************************/
@@ -200,7 +198,7 @@ def main(settings):
                 "image": class_stack.multiply(10000).int16(),
                 "description": name,
                 "fileNamePrefix": name,
-                "folder": "Pasture_Mapping_Landsat_Col5",
+                "folder": settings.FOLDER,
                 "region": classificationArea.geometry().bounds(),
                 "scale": 30,
                 "maxPixels": 1.0e13,
@@ -208,6 +206,6 @@ def main(settings):
         )
         try:
             task.start()
-            print(f"Task send {name}")
+            logger.info(f"A task named {name} has been created and will be saved in the {settings.FOLDER} folder in Google Drive")
         except Exception as e:
-            print(f"Error: {e}")
+            logger.warning(f"Error: {e}")
