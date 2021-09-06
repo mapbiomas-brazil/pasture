@@ -72,8 +72,8 @@ Also, you can change the training dataset (cultivated and natural) by changing t
 
 Merge the classifications files by year using the binaries **gdalbuildvrt** and **gdal_translate*. E.g.:
 
-* gdalbuildvrt lapig_pasture_map_ <year xxxx> .vrt *_ <year xxxx> _*.tif
-* gdal_translate lapig_pasture_map_ <year xxxx> .vrt lapig_pasture_map_ <year xxxx> .tif -co COMPRESS=LZW -co BIGTIFF=YES
+* gdalbuildvrt lapig_pasture_map_|year xxxx|.vrt *_|year xxxx|_*.tif
+* gdal_translate lapig_pasture_map_|year xxxx|.vrt lapig_pasture_map_|year xxxx|.tif -co COMPRESS=LZW -co BIGTIFF=YES
 
 In addition, if you want to view a file in a GIS like QGIS, just add a pyramid to your data using:
 
