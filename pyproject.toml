@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "Pasture"
+version = "2.0.0"
+description = ""
+authors = ["Rocha, Jairo Matos <nxgame2009@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.scripts]
+pasture = "Pasture.cli:main"
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+earthengine-api = "^0.1.280"
+dynaconf = "^3.1.5"
+click = "^8.0.1"
+loguru = "^0.5.3"
+
+
+[tool.poetry.dev-dependencies]
+web-pdb = "^1.5.6"
+black = "^21.7b0"
+autopep8 = "^1.5.7"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
