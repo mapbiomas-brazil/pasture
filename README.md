@@ -106,8 +106,8 @@ FOR /l %%X in (0,2048,145446) DO python3 2_Multidimensional_median_filter.py %%X
 ```
 
 P.S.: It's possible to obtain the image size using the binary *gdalinfo*.
-P.S.2: If you have memory problems, it's possible to reduce the block size by changing the value *2048* (Y block size) to a lower value (e.g. 1024).
 
+P.S.2: If you have memory problems, it's possible to reduce the block size by changing the value *2048* (Y block size) to a lower value (e.g. 1024).
 
 ## 4. Merging the files... again.
 
