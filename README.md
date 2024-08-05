@@ -17,18 +17,12 @@ This repository organizes the pasture mapping codes developed by [Laboratório d
 * An folder synchronization with Google Drive ([For Windows](https://www.google.com/drive/download/) | [For Unix](https://github.com/odeke-em/drive))
   
 **Recommendations for Windows**: 
-* Install [Poetry - Python 3.9](https://python-poetry.org/docs/#windows-powershell-install-instructions) or above and the [Gdal package](https://anaconda.org/conda-forge/gdal). For Windows users, we need to add some system variables like:
+* Install [Miniconda - Python > 3.9]([https://python-poetry.org/docs/#windows-powershell-install-instructions](https://docs.anaconda.com/miniconda/) or above and the [Gdal package](https://anaconda.org/conda-forge/gdal). For Windows users, we need to add some system variables like:
       
-* PATH =  %USERPROFILE%\.poetry\bin;
+* PATH =  C:\ProgramData\Miniconda3\Library\bin;
 * GDAL_DATA = C:\ProgramData\Miniconda3\Library\share\gdal
   
 **Recommendations for Unix**:
-
-* Install Poetry
-
-```shell
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-````
 
 * Install Python-Gdal and Gdal Binaries (sudo apt-get install -y python-gdal; sudo apt-get install -y gdal)
 
@@ -42,24 +36,10 @@ You have 2 options for make your classification:
 
 ### Using Python with GEE
 
-First let's create the environment with poetry using the command
+First download/clone the in this Github repository, then acess the **1_gee_processing** folder through the system terminal/prompt and execute the command bellow:
 
 ```shell
-poetry install
-```
-
-To check if everything went right use the command, this command should open the help text
-
-```shell
-poetry run pasture --help
-```
-
-If you want you can edit as default configuration through the file settings.toml.
-
-Example of running for collection 5 tiles T223071 and T223078, for the years 1999 to 2001
-
-```shell
-poetry run pasture --collection=5 --grid_list="T223071, T223078" --start_year=1999 --end_year=2001
+python LANDSAT_COL9_1985_2023_justRun_v2.py
 ```
 
 ### Using JavaScript in GEE
