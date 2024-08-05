@@ -10,7 +10,9 @@ This repository organizes the pasture mapping codes developed by [Laboratório d
   
 * Gdal python package and Gdal Binaries
   
-* Scipy python package
+* scipy python package
+
+* joblib python package
   
 * Earth Engine python library
   
