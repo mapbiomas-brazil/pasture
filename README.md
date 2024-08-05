@@ -46,7 +46,7 @@ python LANDSAT_COL9_1985_2023_justRun_v2.py
 
 ### Using JavaScript in GEE
 
-* [Access this link](https://code.earthengine.google.com/0c97565dcb06e343589451d08c3a4816) and, if desired, change the parameters of ***year***, ***landsatWRSPath***, ***landsatWRSRow***, ***my_folder***. After that you can click in **Run** and export your result in **Task**.
+* [Access this link](https://code.earthengine.google.com/6f2def9fbafceb0d9bd7e09d96262559) and, if desired, change the parameters of ***year***, ***landsatWRSPath***, ***landsatWRSRow***, ***my_folder***. After that you can click in **Run** and export your result in **Task**.
 
 Also, you can change the training dataset (cultivated and natural) by changing the variable ***TRAIN_DATA*** (line 9).
 
