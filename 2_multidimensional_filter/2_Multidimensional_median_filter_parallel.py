@@ -1,4 +1,4 @@
-import os
+import os, sys
 import glob
 import datetime
 from osgeo import gdal, osr
@@ -206,8 +206,8 @@ if __name__ == '__main__':
   rowSize = 145446
   buffer_size = 256
 
-  input_dir = r'E:\COL9_MAPBIOMAS\RAW_2_0'
-  output_dir = r'E:\COL9_MAPBIOMAS\OUTPUT'
+  input_dir = sys.argv[1]
+  output_dir = sys.argv[2]
 
   loopList = list(range(start_step,rowSize,buffer_size))
 
