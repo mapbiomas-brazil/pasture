@@ -48,8 +48,6 @@ def createOutputImage(referenceFile, outputFile, startRow, xSize, data, imageFor
   outRasterSRS = osr.SpatialReference()
   outRasterSRS.ImportFromWkt(referenceDs.GetProjectionRef())
 
-  #print("Creating " + outputFile + " ("+str(xSize)+"x"+str(ySize)+")")
-  #outRaster = driver.Create(outputFile, xSize, ySize, 1, referenceBand.DataType, [ 'COMPRESS=LZW' ])
   outRaster = driver.Create(outputFile, xSize, ySize, 1, gdal.GDT_Byte, [ 'COMPRESS=LZW','TILED=YES','BIGTIFF=YES' ])
   outRaster.SetGeoTransform((newOriginX, pixelWidth, 0, originY, 0, pixelHeight))
   outRaster.SetProjection(outRasterSRS.ExportToWkt())
@@ -124,7 +122,6 @@ def writeData(outputBaseDir, inputFiles, startRow, endRow, outputData):
         pass
 
     outputfile = outputDir + '/' + inputFile.replace('.tif', '_tsmedian-' + str(startRow) + '-' + str(endRow) + '.tif')
-    #print(outputfile)
     
     xSize = (endRow - startRow)
     ySize = 1
@@ -151,17 +148,9 @@ def run_process(startRow,endRow,input_dir,output_dir):
     identifier=str(startRow)+'-'+str(endRow)
     print("{dateStr} [{identifier}] {msg}".format(dateStr=dateStr, identifier=identifier, msg=msg))
 
-  #inputDir = r'E:\SENTINEL_BRASIL_v2'
-  #outputDir = r'E:\SENTINEL_BRASIL_v2\OUTPUT'
-  #files = ['LAPIG_Pasture_S2_Col7_Y2016.tif','LAPIG_Pasture_S2_Col7_Y2017.tif','LAPIG_Pasture_S2_Col7_Y2018.tif','LAPIG_Pasture_S2_Col7_Y2019.tif','LAPIG_Pasture_S2_Col7_Y2020.tif','LAPIG_Pasture_S2_Col7_Y2021.tif','LAPIG_Pasture_S2_Col7_Y2022.tif']
-
   inputDir = input_dir
   outputDir = output_dir
   files = glob.glob(os.path.join(input_dir,'*.tif'))
-  
-  
-  #startRow = int(sys.argv[1])
-  #endRow = startRow + int(sys.argv[2])
   
   log("Starting")
   
@@ -177,15 +166,12 @@ def run_process(startRow,endRow,input_dir,output_dir):
   
   if np.sum(data) != 0:
     
-    #print('Input data:' + str(data.shape))
-  
     filterTime = time.time()
     dataFiltered = applyFilter(data)
     filterTime = (time.time() - filterTime)
   
     log(' Filter application time: ', formatTime(filterTime), 'segs')
-    #print('Output data:' + str(dataFiltered.shape))
-  
+
     writingTime = time.time()
     writeData(outputDir, inputFiles, startRow, endRow, dataFiltered)
     writingTime = (time.time() - writingTime)
@@ -213,8 +199,6 @@ if __name__ == '__main__':
 
   if (loopList[-1]+buffer_size) > rowSize:
     loopList.append(rowSize)
-
-  #run_process(startRow,endRow,input_dir,output_dir)
 
   worker_args = [
     (startRow,startRow+buffer_size,input_dir,output_dir) \
