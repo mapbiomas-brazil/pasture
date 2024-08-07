@@ -65,14 +65,10 @@ def getInputWindow(inputFile, startRow, endRow):
   xoff = startRow - 1
   winXsize = (endRow - startRow) + 2
 
-  #print(xoff,winXsize, Xsize,xoff+winXsize)
-
   if (xoff < 0):
     xoff = 0
   if (xoff+winXsize > Xsize):
     winXsize = Xsize - xoff
-
-  #print(winXsize)
 
   return xoff, 0, winXsize, Ysize
 
