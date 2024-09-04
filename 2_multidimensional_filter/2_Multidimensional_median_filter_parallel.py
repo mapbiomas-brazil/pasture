@@ -183,13 +183,12 @@ def run_process(startRow,endRow,input_dir,output_dir):
 
 if __name__ == '__main__':
 
-  #start_step = 0
-  start_step = 0
-  rowSize = 145446
-  buffer_size = 256
-
   input_dir = sys.argv[1]
   output_dir = sys.argv[2]
+
+  start_step = 0
+  buffer_size = 256
+  rowSize = gdal.Open(glob.glob(os.path.join(input_dir,'*.tif'))[0]).RasterXSize
 
   loopList = list(range(start_step,rowSize,buffer_size))
 
