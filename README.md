@@ -4,7 +4,11 @@
 
 This repository organizes the pasture mapping codes developed by [Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG/UFG)](https://www.lapig.iesa.ufg.br/). The methology used by LAPIG team is avaliable in the paper of [PARENTE et al. (2017)](https://www.sciencedirect.com/science/article/pii/S0034425719303207) 
 
-**Requisites**:
+## Overview
+This repository contains a script for classifying pasture areas using Sentinel-2 imagery, the LAPIG/MapBiomas sampling dataset, and IBGE's 1:250,000 topographic charts. The classification is performed using Google Earth Engine (GEE) with a Random Forest classifier. The script automates data preprocessing, spectral index calculation, cloud masking, and classification, exporting the results to Google Drive.
+
+
+**Requirements**:
 
 * Python 3.9 or above
   
@@ -15,6 +19,8 @@ This repository organizes the pasture mapping codes developed by [Laboratório d
 * joblib python package
   
 * Earth Engine python library
+
+* An active GEE account
   
 * An folder synchronization with Google Drive ([For Windows](https://www.google.com/drive/download/) | [For Unix](https://github.com/odeke-em/drive))
   
@@ -38,11 +44,53 @@ You have 2 options for make your classification:
 
 ### Using Python with GEE
 
-First download/clone the in this Github repository, then acess the **1_gee_processing** folder through the system terminal/prompt and execute the command bellow:
-
-```shell
-python run_sentinel_2_pasture_Col2_MapBiomas_parseRun.py
+## Installation
+### 1. Install dependencies
+```bash
+pip install earthengine-api
 ```
+
+### 2. Authenticate Google Earth Engine
+```bash
+earthengine authenticate
+```
+
+### 3. Clone the repository
+```bash
+git clone https://github.com/your-repo/sentinel-2-pasture-classification.git
+cd sentinel-2-pasture-classification
+```
+
+## Usage
+Run the script by specifying the desired year and optionally a specific chart:
+```bash
+python run_sentinel_2_pasture_Col2_MapBiomas_parseRun.py --year 2023 --chart SE-22-X-A
+```
+
+### Parameters:
+- `--year`: The target year for classification (e.g., `2023`).
+- `--chart`: (Optional) Specific IBGE chart to process. If omitted, all charts will be processed.
+
+## Functionality
+### 1. Spectral Index Calculation
+The script computes vegetation indices such as NDVI, NDWI, CAI, CRI1, and others.
+
+### 2. Temporal Feature Reduction
+Reduces image collections using median, min, max, standard deviation, and amplitude calculations.
+
+### 3. Cloud Masking
+Applies cloud and shadow masks based on Google's Cloud Score+ dataset.
+
+### 4. Classification
+Uses a Random Forest classifier trained on LAPIG/MapBiomas samples.
+
+### 5. Export
+Exports the classification result to Google Drive in GeoTIFF format.
+
+## Output
+- **Filename Format**: `br_pasture_s2_col2_v1_<chart>_<year>.tif`
+- **Storage**: Google Drive (`lapig_br_pasture_mapping_s2_v1` folder)
+- **Resolution**: 10m per pixel
 
 ### Using JavaScript in GEE
 
@@ -77,3 +125,9 @@ Like in the section 2, we will use the *gdalbuildvrt* and *gdal_translate* to me
 <summary> <b>Changelog</b> </summary>
 <p>* Version 3.0 released (Github version)</p>
 </details>
+
+## Contribution
+Feel free to submit issues or pull requests to improve the script!
+
+## License
+This project is licensed under the MIT License.
