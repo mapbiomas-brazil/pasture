@@ -41,14 +41,12 @@ You have 2 options for make your classification:
 First download/clone the in this Github repository, then acess the **1_gee_processing** folder through the system terminal/prompt and execute the command bellow:
 
 ```shell
-python LANDSAT_COL9_1985_2023_justRun_v2.py
+python run_sentinel_2_pasture_Col2_MapBiomas_parseRun.py
 ```
 
 ### Using JavaScript in GEE
 
-* [Access this link](https://code.earthengine.google.com/0ce5f1d6cd5d1c9d1c3991740fb11606) and, if desired, change the parameters of ***year***, ***IBGE_Chart***, ***my_folder***. After that you can click in **Run** and export your result in **Task**.
-
-Also, you can change the training dataset (cultivated and natural) by changing the variable ***TRAIN_DATA*** (line 9).
+* [Access this link](https://code.earthengine.google.com/308ef5da906db6b588c466d45b925f3b) and, if desired, change the parameters of ***year***, ***IBGE_Chart***, ***my_folder***. After that you can click in **Run** and export your result in **Task**.
 
 ## 2. Prepare the data for Multidimensional Median Filter
 
