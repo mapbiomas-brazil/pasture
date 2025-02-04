@@ -1,6 +1,6 @@
 import ee
 import math
-import sys
+import argparse
 
 ee.Initialize(opt_url='https://earthengine-highvolume.googleapis.com')
 
@@ -297,7 +297,27 @@ list_charts = ['SF-23-Z-C','SF-23-X-D','SF-23-X-C','SF-23-Z-A','SF-23-Y-B','SF-2
 			'SC-19-Y-B','SC-18-X-B','SB-18-Z-B','NA-19-Z-A','NA-19-Z-B','NA-20-Y-A','NA-20-V-A','NB-21-Y-A','SA-22-X-B','SA-23-V-D',
 			'SH-21-Z-C','SI-22-V-B','SH-22-Z-A','SG-23-V-C','NA-21-V-D']
 
-#Executes the classification function
-for tile in list_charts:
-    #for year in range(2015,2024,1):
-    run_classficiation(tile, int(sys.argv[1]));
+
+
+def main():
+    parse_description = str("""This script classifies pasture areas using Sentinel-2 imagery, LAPIG/MapBiomas sampling dataset, and IBGE division of Brazil 
+    by 1:250,000 topographic charts. The classification is performed using Google Earth Engine (GEE) with a Random Forest classifier.
+    The script automates data preprocessing, spectral index calculation, cloud masking, and classification, exporting the results to Google Drive.""")
+                                        
+    parser = (argparse.ArgumentParser(description=f"{parse_description}"))
+    parser.add_argument("--year", required=True, help="Selected year to process",type=int)
+    parser.add_argument("--chart", required=False, help="Selected chart to process. If not provided, processes all the charts",type=str,default='ALL')
+    
+    args = parser.parse_args()
+
+    #Executes the classification function
+    if str(args.chart) != "ALL":
+        run_classficiation(args.chart, args.year);
+    else:
+        for chart in list_charts:
+            #for year in range(2015,2024,1):
+            run_classficiation(chart, int(args.year));
+        
+
+if __name__ == "__main__":
+    main()
