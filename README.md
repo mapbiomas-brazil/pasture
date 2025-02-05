@@ -1,11 +1,8 @@
 ![Vinícius Mesquita](Logo_v2.png)
 
-# Pasture Mapping Codes
-
-This repository organizes the pasture mapping codes developed by [Remote Sensing and GIS Lab (LAPIG/UFG)](https://www.lapig.iesa.ufg.br/). The methology used by LAPIG team is avaliable in the paper of [PARENTE et al. (2017)](https://www.sciencedirect.com/science/article/pii/S0034425719303207) 
-
 ## Overview
-This repository contains a script for classifying pasture areas using Sentinel-2 imagery, the LAPIG/MapBiomas sampling dataset, and IBGE's 1:250,000 topographic charts. The classification is performed using Google Earth Engine (GEE) with a Random Forest classifier. The script automates data preprocessing, spectral index calculation, cloud masking, and classification, exporting the results to Google Drive.
+
+This repository contains a script for classifying pasture areas using Sentinel-2 imagery, the LAPIG/MapBiomas sampling dataset, and IBGE's 1:250,000 topographic charts. The classification is performed using Google Earth Engine (GEE) with a Random Forest classifier. The script automates data preprocessing, spectral index calculation, cloud masking, and classification, exporting the results to Google Drive. These pasture mapping codes were developed by [Remote Sensing and GIS Lab (LAPIG/UFG)](https://www.lapig.iesa.ufg.br/). The methology used by LAPIG team is avaliable in the paper of [PARENTE et al. (2017)](https://www.sciencedirect.com/science/article/pii/S0034425719303207) 
 
 
 **Requirements**:
