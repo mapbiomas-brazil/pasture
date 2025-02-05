@@ -22,7 +22,7 @@ This repository contains a script for classifying pasture areas using Sentinel-2
 * An folder synchronization with Google Drive ([For Windows](https://www.google.com/drive/download/) | [For Unix](https://github.com/odeke-em/drive))
   
 **Recommendations for Windows**: 
-* Install [Miniconda - Python > 3.9]([https://python-poetry.org/docs/#windows-powershell-install-instructions](https://docs.anaconda.com/miniconda/) or above and the [Gdal package](https://anaconda.org/conda-forge/gdal). For Windows users, we need to add some system variables like:
+* Install ([Miniconda - Python > 3.9](https://docs.anaconda.com/miniconda/) or above and the [Gdal package](https://anaconda.org/conda-forge/gdal). For Windows users, we need to add some system variables like:
       
 * PATH =  C:\ProgramData\Miniconda3\Library\bin;
 * GDAL_DATA = C:\ProgramData\Miniconda3\Library\share\gdal
